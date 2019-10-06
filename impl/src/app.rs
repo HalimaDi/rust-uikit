@@ -34,10 +34,10 @@ impl INSObject for ApplicationDelegateObj {
 
 impl IUIApplicationDelegate for ApplicationDelegateObj { }
 
-static mut APP_DELEGATE_PTR: Option<*mut ApplicationDelegate> = None;
+static mut APP_DELEGATE_PTR: Option<*mut dyn ApplicationDelegate> = None;
 
 pub fn application_main<T: ApplicationDelegate>(delegate: T) -> ! {
-    let delegate: Box<ApplicationDelegate> = Box::new(delegate);
+    let delegate: Box<dyn ApplicationDelegate> = Box::new(delegate);
     unsafe {
         APP_DELEGATE_PTR = Some(mem::transmute(delegate));
     }
@@ -46,7 +46,7 @@ pub fn application_main<T: ApplicationDelegate>(delegate: T) -> ! {
 }
 
 #[no_mangle]
-pub unsafe extern fn RustApplicationDelegateCreate(out: *mut *mut ApplicationDelegate) -> BOOL {
+pub unsafe extern fn RustApplicationDelegateCreate(out: *mut *mut dyn ApplicationDelegate) -> BOOL {
     if let Some(delegate) = APP_DELEGATE_PTR.take() {
         *out = delegate;
         YES
@@ -56,13 +56,13 @@ pub unsafe extern fn RustApplicationDelegateCreate(out: *mut *mut ApplicationDel
 }
 
 #[no_mangle]
-pub unsafe extern fn RustApplicationDelegateDestroy(obj: *mut ApplicationDelegate) {
-    let delegate: Box<ApplicationDelegate> = mem::transmute(obj);
+pub unsafe extern fn RustApplicationDelegateDestroy(obj: *mut dyn ApplicationDelegate) {
+    let delegate: Box<dyn ApplicationDelegate> = mem::transmute(obj);
     drop(delegate);
 }
 
 #[no_mangle]
-pub unsafe extern fn RustApplicationDelegateCreateRootViewController(obj: *mut ApplicationDelegate) -> *mut UIViewController {
+pub unsafe extern fn RustApplicationDelegateCreateRootViewController(obj: *mut dyn ApplicationDelegate) -> *mut UIViewController {
     let controller = (&*obj).root_view_controller();
     let controller_ptr = &*controller as *const _ as *mut _;
     mem::forget(controller);
@@ -70,7 +70,7 @@ pub unsafe extern fn RustApplicationDelegateCreateRootViewController(obj: *mut A
 }
 
 #[no_mangle]
-pub unsafe extern fn RustApplicationDelegateDidFinishLaunching(obj: *mut ApplicationDelegate) -> BOOL {
+pub unsafe extern fn RustApplicationDelegateDidFinishLaunching(obj: *mut dyn ApplicationDelegate) -> BOOL {
     if (&*obj).did_finish_launching() {
         YES
     } else {
