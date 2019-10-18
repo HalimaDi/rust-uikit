@@ -1,4 +1,6 @@
-extern crate gcc;
+extern crate cc;
+
+#[cfg(not(any(target_os = "ios", target_os="macos")))]
 use std::env;
 
 #[cfg(any(target_arch="i386", target_arch="x86", target_arch="i686", target_arch="x86_64"))]
@@ -20,7 +22,7 @@ fn sdk_path() -> String {
 fn main() {
     let include_location = sdk_path();
 
-    gcc::Build::new()
+    cc::Build::new()
     .include(&include_location)
     .file("extern/RustApplicationDelegate.m")
     .compile("librust_uikit_impl.a");

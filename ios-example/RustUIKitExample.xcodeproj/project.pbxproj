@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		07680E111F464F8600DA79D7 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07680E101F464F8600DA79D7 /* libresolv.tbd */; };
 		134BB5D01BA38F5B004952BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 134BB5CF1BA38F5B004952BF /* main.m */; };
-		134BB5EB1BA3953D004952BF /* libuikit_example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 134BB5E91BA3953D004952BF /* libuikit_example.a */; };
 		134BB5ED1BA395EC004952BF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134BB5EC1BA395EC004952BF /* UIKit.framework */; };
 		1373D1AE1D0C979D008AF888 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1373D1AD1D0C979D008AF888 /* Security.framework */; };
+		961C04EF235BAB3E009FFF7D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 961C04EE235BAB3E009FFF7D /* Default-568h@2x.png */; };
+		96F8E939235C082800DA6BEB /* libuikit_example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 134BB5E91BA3953D004952BF /* libuikit_example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		134BB5EA1BA3953D004952BF /* uikit_example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uikit_example.h; path = rust/uikit_example.h; sourceTree = "<group>"; };
 		134BB5EC1BA395EC004952BF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1373D1AD1D0C979D008AF888 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		961C04EE235BAB3E009FFF7D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,10 +32,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96F8E939235C082800DA6BEB /* libuikit_example.a in Frameworks */,
 				07680E111F464F8600DA79D7 /* libresolv.tbd in Frameworks */,
 				1373D1AE1D0C979D008AF888 /* Security.framework in Frameworks */,
 				134BB5ED1BA395EC004952BF /* UIKit.framework in Frameworks */,
-				134BB5EB1BA3953D004952BF /* libuikit_example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +53,7 @@
 		134BB5C21BA38F5B004952BF = {
 			isa = PBXGroup;
 			children = (
+				961C04EE235BAB3E009FFF7D /* Default-568h@2x.png */,
 				1373D1AD1D0C979D008AF888 /* Security.framework */,
 				134BB5EC1BA395EC004952BF /* UIKit.framework */,
 				134BB5E81BA39521004952BF /* rust */,
@@ -93,6 +96,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 134BB5E21BA38F5B004952BF /* Build configuration list for PBXNativeTarget "RustUIKitExample" */;
 			buildPhases = (
+				9EFDDAE3235A6C0200F4C7D2 /* Cargo  */,
 				134BB5C71BA38F5B004952BF /* Sources */,
 				134BB5C81BA38F5B004952BF /* Frameworks */,
 				134BB5C91BA38F5B004952BF /* Resources */,
@@ -122,7 +126,7 @@
 			};
 			buildConfigurationList = 134BB5C61BA38F5B004952BF /* Build configuration list for PBXProject "RustUIKitExample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -143,10 +147,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				961C04EF235BAB3E009FFF7D /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9EFDDAE3235A6C0200F4C7D2 /* Cargo  */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Cargo ";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/libuikit_example.a",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "export PATH=~/.cargo/bin:$PATH\n\ncd ${SRCROOT}/rust/\n\nexport OUTPUT=${SRCROOT}/rust/libuikit_example.a\n\n\nif [ $CONFIGURATION = \"Release\" ]; then\n    cargo lipo --xcode-integ --release\n    cp target/universal/release/libuikit_example.a ${SRCROOT}/rust\nelse\n    cargo lipo --xcode-integ\n    cp target/universal/debug/libuikit_example.a ${SRCROOT}/rust\nfi\n\nif [[ $ACTION -eq \"clean\" ]]; then\n#    cargo clean\n    rm ./libuikit_example.a\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		134BB5C71BA38F5B004952BF /* Sources */ = {
@@ -246,7 +273,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = RustUIKitExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -261,7 +288,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = RustUIKitExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

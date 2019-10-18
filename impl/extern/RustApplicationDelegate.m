@@ -41,7 +41,7 @@ BOOL RustApplicationDelegateDidFinishLaunching(RustApplicationDelegatePtr obj);
   return _window;
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)__unused application didFinishLaunchingWithOptions:(NSDictionary *)__unused launchOptions {
   _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = RustApplicationDelegateCreateRootViewController(_obj);
   _window.rootViewController = rootViewController;

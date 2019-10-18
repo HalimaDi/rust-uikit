@@ -16,6 +16,10 @@ mod image;
 mod image_view;
 mod view;
 mod view_controller;
+mod label;
+mod progress_view;
+mod button;
+mod switch;
 
 pub use app::{application_main, IUIApplicationDelegate};
 pub use color::UIColor;
@@ -23,6 +27,20 @@ pub use image::UIImage;
 pub use image_view::UIImageView;
 pub use view::{IUIView, UIView};
 pub use view_controller::{IUIViewController, UIViewController};
+pub use label::{
+    IUILabel,
+    UILabel
+};
+pub use progress_view::{
+    UIProgressView,
+};
+pub use button::{
+    UIButton,
+    UIButtonType,
+};
+pub use switch::{
+    UISwitch
+};
 
 #[link(name = "UIKit", kind = "framework")]
 extern { }
