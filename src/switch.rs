@@ -3,6 +3,7 @@ use objc::Message;
 use objc::runtime::{
     Class,
     Sel,
+    Object,
 };
 use objc_id::{Id};
 use objc_foundation::INSObject;
@@ -58,15 +59,14 @@ impl UISwitch {
         unsafe {
             let obj: *mut Self = msg_send![cls, alloc];
             let obj: *mut Self = msg_send![obj, initWithFrame:frame];
-            let _ : () = msg_send![
-                obj, addTarget:obj action:Sel::register("on_change") forControlEvents: UIControlEvents::ValueChanged
-            ];
+            let _ : () = msg_send![ obj, addTarget:obj action:sel!(on_change) forControlEvents: UIControlEvents::ValueChanged ];
             Id::from_retained_ptr(obj)
         }
     }
-    pub fn on_change(&self) {
+    extern fn on_change(_: &Object, _: Sel, _: *mut Object) {
         println!("SOMETHING CHANGED");
     }
+
 }
 
 impl INSObject for UISwitch {
