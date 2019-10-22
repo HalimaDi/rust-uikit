@@ -39,7 +39,8 @@ pub use button::{
     UIButtonType,
 };
 pub use switch::{
-    UISwitch
+    UISwitch,
+    RustSwitch,
 };
 
 #[link(name = "UIKit", kind = "framework")]

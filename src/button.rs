@@ -34,15 +34,13 @@ unsafe impl Message for UIButton { }
 
 impl UIButton {
     pub fn with_type(button_type: UIButtonType) -> Id<Self> {
-        unimplemented!();
-        /*
         let cls = Self::class();
         unsafe {
             let obj: *mut Self = msg_send![cls, alloc];
             let obj: *mut Self = msg_send![obj, buttonWithType:(button_type as i64)];
+            //let obj: Result<*mut Self, MessageError> = (*obj).send_message(sel!(buttonWithType:), (button_type as i64));
             Id::from_retained_ptr(obj)
         }
-        */
     }
 }
 

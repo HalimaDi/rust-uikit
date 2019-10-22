@@ -1,9 +1,14 @@
 use core_graphics::geometry::CGRect;
 use objc::Message;
-use objc::runtime::{
-    Class,
-    Sel,
-    Object,
+use objc::{
+    runtime::{
+        Class,
+        Sel,
+        Object,
+    },
+    declare::{
+        ClassDecl,
+    },
 };
 use objc_id::{Id};
 use objc_foundation::INSObject;
@@ -48,7 +53,6 @@ pub enum UIControlEvents {
 
 pub struct UISwitch {
     _marker: NoSyncSend,
-
 }
 
 unsafe impl Message for UISwitch { }
@@ -59,14 +63,10 @@ impl UISwitch {
         unsafe {
             let obj: *mut Self = msg_send![cls, alloc];
             let obj: *mut Self = msg_send![obj, initWithFrame:frame];
-            let _ : () = msg_send![ obj, addTarget:obj action:sel!(on_change) forControlEvents: UIControlEvents::ValueChanged ];
+            let _ : () = msg_send![ obj, addTarget:obj action:sel!(number) forControlEvents: UIControlEvents::ValueChanged ];
             Id::from_retained_ptr(obj)
         }
     }
-    extern fn on_change(_: &Object, _: Sel, _: *mut Object) {
-        println!("SOMETHING CHANGED");
-    }
-
 }
 
 impl INSObject for UISwitch {
@@ -86,3 +86,50 @@ impl INSObject for UISwitch {
     }
 }
 
+pub struct RustSwitch {
+    _marker: NoSyncSend,
+}
+
+impl RustSwitch {
+    pub fn register() {
+        let superclass = class!(UISwitch);
+        let mut decl = ClassDecl::new("RustSwitch", superclass).unwrap();
+        decl.add_ivar::<u32>("_number");
+    unsafe {
+        decl.add_method(sel!(number),
+        Self::my_number_get as extern fn(&Object, Sel) -> u32);
+    }
+        decl.register();
+    }
+    extern fn my_number_get(this: &Object, _cmd: Sel) -> u32 {
+        println!("IS THIS A THING?");
+        println!("{:?}", this);
+        println!("{:?}", *this.class());
+        unsafe { *this.get_ivar("_number") }
+    }
+    pub fn with_frame(frame: CGRect) -> Id<Self> {
+        let cls = Self::class();
+        unsafe {
+            let obj: *mut Self = msg_send![cls, alloc];
+            let obj: *mut Self = msg_send![obj, initWithFrame:frame];
+            let _ : () = msg_send![ obj, addTarget:obj action:sel!(number) forControlEvents: UIControlEvents::ValueChanged ];
+            Id::from_retained_ptr(obj)
+        }
+    }
+
+}
+impl INSObject for RustSwitch {
+    fn class() -> &'static Class {
+
+        Class::get("RustSwitch").unwrap()
+    }
+}
+unsafe impl Message for RustSwitch { }
+impl IUIView for RustSwitch {
+    fn set_frame(&self, frame: CGRect) {
+        assert_main_thread!();
+        unsafe {
+            msg_send![self, setFrame:frame]
+        }
+    }
+}

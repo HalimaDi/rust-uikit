@@ -22,6 +22,7 @@ use uikit::{
     UIViewController,
     UIProgressView,
     UISwitch,
+    RustSwitch,
 };
 use uikit_impl::ApplicationDelegate;
 
@@ -75,7 +76,8 @@ impl ApplicationDelegate for ExampleAppDelegate {
             }
         );
         root_vc.view().add_subview(label);
-        let switch : ShareId<UISwitch> = UISwitch::with_frame(
+        RustSwitch::register();
+        let switch : ShareId<RustSwitch> = RustSwitch::with_frame(
             CGRect {
                 origin: CGPoint { x: 10., y: 200. },
                 size: CGSize {
