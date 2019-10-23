@@ -3,6 +3,8 @@ extern crate core_graphics;
 extern crate objc;
 extern crate objc_id;
 extern crate objc_foundation;
+extern crate pretty_env_logger;
+#[macro_use] extern crate log;
 
 macro_rules! assert_main_thread {
     () => (
@@ -41,6 +43,7 @@ pub use button::{
 pub use switch::{
     UISwitch,
     RustSwitch,
+    UIControlEvents,
 };
 
 #[link(name = "UIKit", kind = "framework")]

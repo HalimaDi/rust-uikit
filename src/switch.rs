@@ -87,7 +87,6 @@ impl INSObject for UISwitch {
 }
 
 pub struct RustSwitch {
-    _marker: NoSyncSend,
 }
 
 impl RustSwitch {
@@ -102,17 +101,20 @@ impl RustSwitch {
         decl.register();
     }
     extern fn my_number_get(this: &Object, _cmd: Sel) -> u32 {
-        println!("IS THIS A THING?");
-        println!("{:?}", this);
-        println!("{:?}", *this.class());
+        debug!("Event handler added for: {:?}, {:?}?", this, *this.class());
         unsafe { *this.get_ivar("_number") }
+    }
+
+    pub fn add_event(&self, event_type: UIControlEvents) {
+        unsafe {
+            let _ : () = msg_send![self, addTarget:self action:sel!(number) forControlEvents: event_type ];
+        }
     }
     pub fn with_frame(frame: CGRect) -> Id<Self> {
         let cls = Self::class();
         unsafe {
             let obj: *mut Self = msg_send![cls, alloc];
             let obj: *mut Self = msg_send![obj, initWithFrame:frame];
-            let _ : () = msg_send![ obj, addTarget:obj action:sel!(number) forControlEvents: UIControlEvents::ValueChanged ];
             Id::from_retained_ptr(obj)
         }
     }

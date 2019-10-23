@@ -86,6 +86,7 @@ impl ApplicationDelegate for ExampleAppDelegate {
                 },
             }
         ).share();
+        switch.add_event(uikit::UIControlEvents::AllEvents);
         root_vc.view().add_subview(switch);
 
         /*
