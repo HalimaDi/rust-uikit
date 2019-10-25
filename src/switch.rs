@@ -91,17 +91,9 @@ pub struct RustSwitch {
 
 impl RustSwitch {
     pub fn register() {
-        let superclass = class!(UISwitch);
-        let mut decl = ClassDecl::new("RustSwitch", superclass).unwrap();
-        decl.add_ivar::<u32>("_number");
-    unsafe {
-        decl.add_method(sel!(number),
-        Self::my_number_get as extern fn(&Object, Sel) -> u32);
     }
-        decl.register();
-    }
-    extern fn my_number_get(this: &Object, _cmd: Sel) -> u32 {
-        debug!("Event handler added for: {:?}, {:?}?", this, *this.class());
+    extern fn my_number_get(this: &Object, cmd: Sel) -> u32 {
+        debug!("Event handler added for: {:?}, {:?}?, {:?}", this, *this.class(), cmd.name());
         unsafe { *this.get_ivar("_number") }
     }
 
@@ -123,7 +115,18 @@ impl RustSwitch {
 impl INSObject for RustSwitch {
     fn class() -> &'static Class {
 
-        Class::get("RustSwitch").unwrap()
+        if let Some(cls) = Class::get("RustSwitch") {
+            cls
+        } else {
+            let superclass = class!(UISwitch);
+            let mut decl = ClassDecl::new("RustSwitch", superclass).unwrap();
+            decl.add_ivar::<u32>("_number");
+            unsafe {
+                decl.add_method(sel!(number),
+                Self::my_number_get as extern fn(&Object, Sel) -> u32);
+            }
+            decl.register()
+        }
     }
 }
 unsafe impl Message for RustSwitch { }
