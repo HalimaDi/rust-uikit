@@ -22,6 +22,7 @@ mod label;
 mod progress_view;
 mod button;
 mod switch;
+mod control;
 
 pub use app::{application_main, IUIApplicationDelegate};
 pub use color::UIColor;
@@ -42,8 +43,15 @@ pub use button::{
 };
 pub use switch::{
     UISwitch,
-    RustSwitch,
+    IUISwitch,
+};
+pub use control::{
+    IUIControl,
     UIControlEvents,
+};
+pub use scroll_view::{
+    IUIScrollView,
+    UIScrollView,
 };
 
 #[link(name = "UIKit", kind = "framework")]

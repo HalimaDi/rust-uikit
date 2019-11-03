@@ -1,16 +1,20 @@
 use objc::Message;
-use objc::runtime::Class;
-use objc_id::{Id};
+use objc::runtime::{Class};
+use objc_id::{Id, ShareId};
 use objc_foundation::{INSObject, NSString, INSString};
 
-use crate::{NoSyncSend, IUIView};
+use crate::{NoSyncSend, IUIView, UIColor,};
 
 pub trait IUILabel : INSObject {
-    fn set_text(&self, text: &str) {//-> ShareId<UILabel> {
-        assert_main_thread!();
+    fn set_text(&self, text: &str) {
         let text = NSString::from_str(text);
         unsafe {
             let _ : *mut Self=  msg_send![self, setText:text];
+        }
+    }
+    fn set_text_color(&self, color: ShareId<UIColor>) {
+        unsafe {
+            let _ : *mut Self=  msg_send![self, setTextColor:color];
         }
     }
 }
