@@ -49,10 +49,6 @@ pub use control::{
     IUIControl,
     UIControlEvents,
 };
-pub use scroll_view::{
-    IUIScrollView,
-    UIScrollView,
-};
 
 #[link(name = "UIKit", kind = "framework")]
 extern { }
