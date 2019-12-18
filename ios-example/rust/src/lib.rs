@@ -69,13 +69,13 @@ fn run_winit() -> ! {
         match event {
             Event::LoopDestroyed => return,
             Event::RedrawRequested(_) => {
-                add_views(&root_vc);
             }
             Event::WindowEvent { ref event, .. } => match event {
                 WindowEvent::Resized(_logical_size) => {
+                    window.request_redraw();
                 }
                 WindowEvent::Touch(_touch) => {
-                    window.request_redraw();
+                    add_views(&root_vc);
                 },
                 WindowEvent::CloseRequested => {
                     *control_flow = ControlFlow::Exit
