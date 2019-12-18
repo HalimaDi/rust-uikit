@@ -26,7 +26,8 @@ pub fn application_main<T: IUIApplicationDelegate>() -> ! {
         UIApplicationMain(
             arg_ptrs.len() as c_int,
             arg_ptrs.as_mut_ptr(),
-            ptr::null_mut(), class_name_ptr
+            ptr::null_mut(),
+            class_name_ptr
         );
     }
     unreachable!();

@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07680E111F464F8600DA79D7 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07680E101F464F8600DA79D7 /* libresolv.tbd */; };
 		134BB5D01BA38F5B004952BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 134BB5CF1BA38F5B004952BF /* main.m */; };
 		134BB5ED1BA395EC004952BF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134BB5EC1BA395EC004952BF /* UIKit.framework */; };
 		1373D1AE1D0C979D008AF888 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1373D1AD1D0C979D008AF888 /* Security.framework */; };
 		961C04EF235BAB3E009FFF7D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 961C04EE235BAB3E009FFF7D /* Default-568h@2x.png */; };
+		96517DD92369321B004181B9 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96517DD82369321B004181B9 /* Storyboard.storyboard */; };
+		96517E5223724810004181B9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96517E5123724810004181B9 /* OpenGLES.framework */; };
+		96517E5623724835004181B9 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96517E5523724835004181B9 /* GLKit.framework */; };
 		96F8E939235C082800DA6BEB /* libuikit_example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 134BB5E91BA3953D004952BF /* libuikit_example.a */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +27,13 @@
 		134BB5EC1BA395EC004952BF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1373D1AD1D0C979D008AF888 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		961C04EE235BAB3E009FFF7D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		96517DD82369321B004181B9 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		96517E5123724810004181B9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		96517E532372482B004181B9 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		96517E5523724835004181B9 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		96517E5723732FFF004181B9 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		96517E592373309D004181B9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		96D6A1F52373B02000C4FADD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,9 +42,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				96F8E939235C082800DA6BEB /* libuikit_example.a in Frameworks */,
-				07680E111F464F8600DA79D7 /* libresolv.tbd in Frameworks */,
-				1373D1AE1D0C979D008AF888 /* Security.framework in Frameworks */,
 				134BB5ED1BA395EC004952BF /* UIKit.framework in Frameworks */,
+				1373D1AE1D0C979D008AF888 /* Security.framework in Frameworks */,
+				96517E5623724835004181B9 /* GLKit.framework in Frameworks */,
+				96517E5223724810004181B9 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +55,12 @@
 		07680E0F1F464F8600DA79D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96D6A1F52373B02000C4FADD /* UIKit.framework */,
+				96517E592373309D004181B9 /* CoreGraphics.framework */,
+				96517E5723732FFF004181B9 /* CoreText.framework */,
+				96517E5523724835004181B9 /* GLKit.framework */,
+				96517E532372482B004181B9 /* CoreFoundation.framework */,
+				96517E5123724810004181B9 /* OpenGLES.framework */,
 				07680E101F464F8600DA79D7 /* libresolv.tbd */,
 			);
 			name = Frameworks;
@@ -76,6 +92,7 @@
 			children = (
 				134BB5DF1BA38F5B004952BF /* Info.plist */,
 				134BB5CF1BA38F5B004952BF /* main.m */,
+				96517DD82369321B004181B9 /* Storyboard.storyboard */,
 			);
 			path = RustUIKitExample;
 			sourceTree = "<group>";
@@ -148,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				961C04EF235BAB3E009FFF7D /* Default-568h@2x.png in Resources */,
+				96517DD92369321B004181B9 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

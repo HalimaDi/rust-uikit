@@ -2,12 +2,14 @@
 name = "uikit-example"
 version = "0.0.0"
 authors = ["Steven Sheldon"]
+edition = "2018"
 
 [lib]
 name = "uikit_example"
 crate-type = ["staticlib"]
 
 [dependencies]
+#core-graphics = "0.18.0"
 core-graphics = "0.9.1"
 objc_id = "0.1"
 objc = { version = "0.2.7"}
@@ -15,10 +17,9 @@ objc-foundation = "0.1.1"
 color-backtrace = { version = "0.2.3", features = ["failure-bt"] }
 log = "0.4"
 pretty_env_logger = "0.3"
+raw-window-handle = "0.3.1"
+winit = { path = "../../../winit" }
 
 
-[dependencies.uikit]
-path = "../.."
-
-[dependencies.uikit-impl]
-path = "../../impl"
+uikit = { path = "../.." }
+uikit-impl = { path = "../../impl" }
