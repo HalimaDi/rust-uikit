@@ -14,6 +14,9 @@ exclude = [".gitignore", "ios-example/**", "impl/**"]
 core-graphics = "0.9.1"
 objc = { version = "0.2.7", features = [] }
 objc_id = "0.1"
-objc-foundation = "0.1.1"
+#objc-foundation = "0.1.1"
+objc-foundation = { path = "../rust-objc-foundation/" }
+
 log = "0.4"
 pretty_env_logger = "0.3"
+block = "*"

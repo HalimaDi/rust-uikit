@@ -3,6 +3,7 @@ extern crate core_graphics;
 extern crate objc;
 extern crate objc_id;
 extern crate objc_foundation;
+extern crate block;
 extern crate pretty_env_logger;
 #[macro_use] extern crate log;
 
@@ -23,6 +24,7 @@ mod progress_view;
 mod button;
 mod switch;
 mod control;
+mod text_field;
 
 pub use app::{application_main, IUIApplicationDelegate};
 pub use color::UIColor;
@@ -48,6 +50,10 @@ pub use switch::{
 pub use control::{
     IUIControl,
     UIControlEvents,
+};
+pub use text_field::{
+    IUITextField,
+    UITextField,
 };
 
 #[link(name = "UIKit", kind = "framework")]

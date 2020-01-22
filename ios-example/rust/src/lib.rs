@@ -23,11 +23,12 @@ use uikit::{
     IUIControl, IUILabel, IUISwitch, IUIView, IUIViewController, UIButton, UIColor, UIImage,
     UIView,
     UIImageView, UILabel, UIProgressView, UISwitch, UIViewController,
+    UITextField, IUITextField,
 };
-use uikit_impl::ApplicationDelegate;
+//use uikit_impl::ApplicationDelegate;
 
 use winit::{
-    event::{Event, WindowEvent},
+    event::{StartCause, Event, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
     window::{
         WindowBuilder,
@@ -67,15 +68,17 @@ fn run_winit() -> ! {
         *control_flow = ControlFlow::Wait;
 
         match event {
+            Event::NewEvents(StartCause::Init) => {
+                add_views(&root_vc);
+            }
             Event::LoopDestroyed => return,
             Event::RedrawRequested(_) => {
             }
             Event::WindowEvent { ref event, .. } => match event {
                 WindowEvent::Resized(_logical_size) => {
-                    window.request_redraw();
+                    //window.request_redraw();
                 }
                 WindowEvent::Touch(_touch) => {
-                    add_views(&root_vc);
                 },
                 WindowEvent::CloseRequested => {
                     *control_flow = ControlFlow::Exit
@@ -93,6 +96,7 @@ fn main() -> ! {
     run_winit()
     //uikit_impl::application_main(ExampleAppDelegate)
 }
+
 fn add_views(root_vc: &ShareId<UIViewController>) {//{{{
 
         let green = UIColor::from_rgba(0., 1., 0., 1.).share();
@@ -112,7 +116,7 @@ fn add_views(root_vc: &ShareId<UIViewController>) {//{{{
         );
         switch.set_on_tint_color(red.clone());
         switch.set_thumb_tint_color(red.clone());
-        //switch.add_event(switch.clone(), uikit::UIControlEvents::ValueChanged);
+        switch.add_event(switch.clone(), uikit::UIControlEvents::ValueChanged);
         root_vc.view().add_subview(switch);
 
         let image = UIImage::with_bytes(LOGO).share();
@@ -147,7 +151,6 @@ fn add_views(root_vc: &ShareId<UIViewController>) {//{{{
         root_vc.view().add_subview(label);
 
 
-
         /*
         let button : ShareId<UIButton> = UIButton::with_type(uikit::UIButtonType::UIButtonTypePlain).share();
         button.set_background_color(blue);
@@ -177,9 +180,22 @@ fn add_views(root_vc: &ShareId<UIViewController>) {//{{{
         progress_view.set_progress(0.3);
         root_vc.view().add_subview(progress_view);
 
+        let button : ShareId<UITextField> = UITextField::new().share();
+        button.set_background_color(blue);
+        button.set_frame(
+            CGRect {
+                origin: CGPoint { x: 10., y: 400. },
+                size: CGSize {
+                    width: 100.,
+                    height: 50.,
+                },
+            }
+        );
+
 
 }//}}}
 
+/*
 struct ExampleAppDelegate;
 impl ApplicationDelegate for ExampleAppDelegate {
     fn root_view_controller(&self) -> ShareId<UIViewController> {
@@ -191,6 +207,7 @@ impl ApplicationDelegate for ExampleAppDelegate {
         true
     }
 }
+*/
 
 #[no_mangle]
 pub extern "C" fn run_app() {

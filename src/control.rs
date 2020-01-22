@@ -34,6 +34,7 @@ pub enum UIControlEvents {
     SystemReserved         = 0xF0000000,  // range reserved for internal framework use
     AllEvents              = 0xFFFFFFFF
 }
+use block::ConcreteBlock;
 
 pub trait IUIControl : INSObject {
     extern fn new_event(this: &Object, _cmd: Sel) {
@@ -41,10 +42,14 @@ pub trait IUIControl : INSObject {
         //unsafe { *this.get_ivar("_number") }
     }
     fn add_event<T: IUIControl>(&self, target: ShareId<T>, event_type: UIControlEvents) {
+        let block = ConcreteBlock::new(|this: &Object, _cmd: Sel| {
+            debug!("New BLOCK HANDLER Event handler!: {:?}, {:?}?", this, *this.class());
+        }).copy();
         unsafe {
             let _: () = msg_send![
                 self,
-                addTarget:target
+                addTarget:block
+                //action:block
                 action:sel!(new_event)
                 forControlEvents: event_type
             ];
